@@ -12,55 +12,73 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+        sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)]
+    )
+    var books: FetchedResults<LibraryBook>
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            VStack {
+                if books.isEmpty {
+                    Text("Belum ada buku")
+                        .foregroundColor(.gray)
+                } else {
+                    List {
+                        ForEach(books) { book in
+                            NavigationLink {
+                                Text(book.title ?? "Tanpa Judul")
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text(book.title ?? "Tanpa Judul")
+                                        .font(.headline)
+                                    Text("by \(book.author ?? "-")")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    Text(book.isRead ? "✅ Sudah Dibaca" : "📘 Belum Dibaca")
+                                        .font(.caption)
+                                }
+                            }
+                        }
+                        .onDelete(perform: deleteItems)
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
+            .navigationTitle("BookShelf")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Label("Add Book", systemImage: "plus")
                     }
                 }
             }
-            Text("Select an item")
         }
+
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newBook = LibraryBook(context: viewContext)
+            newBook.title = "Buku Baru"
+            newBook.author = "Anonim"
+            newBook.isRead = false
+            newBook.dateAdded = Date()
 
             do {
                 try viewContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
 
+
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { books[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
@@ -82,5 +100,8 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    let context = PersistenceController.preview.container.viewContext
+    return ContentView()
+        .environment(\.managedObjectContext, context)
 }
+

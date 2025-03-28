@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		560F6F002D967E1E00E1EAB6 /* LibraryBook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560F6EFE2D967E1E00E1EAB6 /* LibraryBook+CoreDataClass.swift */; };
+		560F6F012D967E1E00E1EAB6 /* LibraryBook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560F6EFF2D967E1E00E1EAB6 /* LibraryBook+CoreDataProperties.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		560F6EDF2D96516000E1EAB6 /* BookShelf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookShelf.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		560F6EFE2D967E1E00E1EAB6 /* LibraryBook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryBook+CoreDataClass.swift"; sourceTree = "<group>"; };
+		560F6EFF2D967E1E00E1EAB6 /* LibraryBook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryBook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +39,8 @@
 		560F6ED62D96516000E1EAB6 = {
 			isa = PBXGroup;
 			children = (
+				560F6EFE2D967E1E00E1EAB6 /* LibraryBook+CoreDataClass.swift */,
+				560F6EFF2D967E1E00E1EAB6 /* LibraryBook+CoreDataProperties.swift */,
 				560F6EE12D96516000E1EAB6 /* BookShelf */,
 				560F6EE02D96516000E1EAB6 /* Products */,
 			);
@@ -119,6 +128,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				560F6F002D967E1E00E1EAB6 /* LibraryBook+CoreDataClass.swift in Sources */,
+				560F6F012D967E1E00E1EAB6 /* LibraryBook+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
